@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GraphicalController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<Pane maxHeight="-Infinity" fx:controller="GraphicalController" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="425.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9"
+      xmlns:fx="http://javafx.com/fxml/1" onMouseEntered="#initiate">
+    <children>
+        <MenuBar fx:id="menuBar" layoutX="15.0" layoutY="13.0" prefHeight="22.0" prefWidth="550">
+            <menus>
+                <Menu text="Options">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Connect to Database" onAction="#setOnConnectDB"/>
+                        <MenuItem mnemonicParsing="false" onAction="#setOnLogOut" text="Disconnect from Database"/>
+                    </items>
+                </Menu>
+                <Menu text="Database Tools" fx:id="dbTools">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#setOnAddUser" text="Add new User"/>
+                        <MenuItem mnemonicParsing="false" onAction="#setOnRemoveUser" text="Remove User "/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
+</Pane>

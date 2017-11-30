@@ -4,13 +4,15 @@ import java.util.Scanner;
 public class DabaseConnection {
 
    static Connection connection;
-   private static String SQLusername = "sql9205470";
-   private static String SQLpassword = "G7IJzs4aeP";
-   private final static String SQLurl = "jdbc:mysql://sql9.freemysqlhosting.net:3306/sql9205470";
+    private static String SQLusername = "UserManagerSFTW";
+    private static String SQLpassword = "7895123.zZ";
+    private final static String SQLurl = "jdbc:mysql://localhost:3306/Users";
    private static PreparedStatement preparedStatement;
    private enum OPTIONS { CONNECTDB, READDB, CREATENEWUSER, EXIT, NO_CHOICE };
 
     public static void main(String [] arguments){
+        GraphicalEnvironment ui = new GraphicalEnvironment();
+        ui.lunch();
           OPTIONS choice = null;
            do{
                choice = displayMenu();
@@ -102,21 +104,13 @@ public class DabaseConnection {
         }
     }
 
-    private static void createNewUser(String fName, String lName) {
-        User newUser = new User(fName,lName);
-        while(!insertIntoDatabase(newUser.getID(), newUser.getUsername(), newUser.getPassword())){
-            newUser.newUserID();
-            System.out.println("ERROR INSERTING INTO DB, TRYING AGAIN");
-        }
-    }
-
-    private static boolean insertIntoDatabase(int ID, String username, String password){
+    protected static boolean insertIntoDatabase(User newUser) {
        try{
             String updateString = "INSERT INTO Users VALUES (?, ?, ?)";
             preparedStatement = connection.prepareStatement(updateString);
-           preparedStatement.setInt(1,ID);
-            preparedStatement.setString(2,username);
-            preparedStatement.setString(3, password);
+           preparedStatement.setInt(1, newUser.getID());
+           preparedStatement.setString(2, newUser.getUsername());
+           preparedStatement.setString(3, newUser.getPassword());
 
            preparedStatement.executeUpdate();
 
@@ -129,15 +123,18 @@ public class DabaseConnection {
         }
     }
 
-    private static void connectDataBase(){
+    protected static boolean connectDataBase() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(SQLurl,SQLusername, SQLpassword);
             System.out.println("Connected");
+            return true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            return false;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
